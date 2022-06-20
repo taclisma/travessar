@@ -13,6 +13,7 @@ class LvlOne extends Phaser.Scene{
         this.player.setOrigin(0.5,1);
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
+        this.player.setCollideWorldBounds(true);
     }
     
     update(){
@@ -40,18 +41,22 @@ class LvlOne extends Phaser.Scene{
     }
 
     movePlayerManager(){
-        if(this.cursorKeys.up.isDown){
-            this.player.setVelocityY(-gameSettings.playerSpeed);
-        }else if(this.cursorKeys.down.isDown){
-            this.player.setVelocityY(+gameSettings.playerSpeed);
-        }else if(this.cursorKeys.left.isDown){
-            this.player.setVelocityX(-gameSettings.playerSpeed);
-        }else if(this.cursorKeys.right.isDown){
-            this.player.setVelocityX(+gameSettings.playerSpeed);   
-        } else {
-            this.player.setVelocityX(0);
-            this.player.setVelocityY(0);
-        }
+        // movimento com delay de 250ms
+        if(this.input.keyboard.checkDown(this.cursorKeys.up, 250)){
+            this.player.setY((this.player.y)-(gameSettings.playerSpeed));
+
+        }else if(this.input.keyboard.checkDown(this.cursorKeys.down, 250)){
+            this.player.setY((this.player.y)+(gameSettings.playerSpeed));
+
+        }else if(this.input.keyboard.checkDown(this.cursorKeys.left, 250)){
+            this.player.setX((this.player.x)-(gameSettings.playerSpeed));
+            
+        }else if(this.input.keyboard.checkDown(this.cursorKeys.right, 250)){
+            this.player.setX((this.player.x)+(gameSettings.playerSpeed));   
+        } //else {
+        //     this.player.setVelocityX(0);
+        //     this.player.setVelocityY(0);
+        // }
     }
 }
-
+    
