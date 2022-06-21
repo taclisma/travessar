@@ -4,21 +4,26 @@ class LvlOne extends Phaser.Scene{
     }
     
     create(){
-        this.carro = this.add.image(config.width/2, config.height/2, "carro");
+        this.carro = this.physics.add.image(config.width/2, config.height/2, "carro");
         //this.carro.setOrigin(0,0);
         
-        this.carro2 = this.add.image(config.width/2, config.height/2, "carro");
+        this.carro2 = this.physics.add.image(config.width/2, config.height/2, "carro");
 
         this.player = this.physics.add.image(config.width/2, config.height - 16, "player");
         this.player.setOrigin(0.5,1);
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
+
+        this.physics.add.collider(this.carro, this.player, function(carro, player) {
+            this.player.resetPlayerPos();
+        });
+        this.physics.add.collider(this.carro2, this.player);
     }
     
     update(){
-        this.moveCarro(this.carro, 3)
-        this.moveCarro(this.carro2, 4)
+        this.moveCarro(this.carro, 3);
+        this.moveCarro(this.carro2, 4);
 
         this.movePlayerManager();
     }
@@ -38,6 +43,11 @@ class LvlOne extends Phaser.Scene{
 
         let randomY = Phaser.Math.Between(200, 600);
         carro.y = randomY;
+    }
+
+    resetPlayerPos(){
+        player.setY(config.height - 16);
+        player.setX(config.width/2);
     }
 
     movePlayerManager(){
