@@ -4,26 +4,33 @@ class LvlOne extends Phaser.Scene{
     }
     
     create(){
-        this.carro = this.physics.add.image(config.width/2, config.height/2, "carro");
-        //this.carro.setOrigin(0,0);
-        
-        this.carro2 = this.physics.add.image(config.width/2, config.height/2, "carro");
-
+        this.carro = this.physics.add.image(config.width, config.height, "carro");        
+        this.carro2 = this.physics.add.image(config.width, config.height, "carro");
+        this.carro3 = this.physics.add.image(config.width, config.height, "carro");
+        this.carro4 = this.physics.add.image(config.width, config.height, "carro");
+       
+        this.enemies = this.physics.add.group();
+            this.enemies.add(this.carro);
+            this.enemies.add(this.carro2);
+            this.enemies.add(this.carro3);
+            this.enemies.add(this.carro4);
+    
         this.player = this.physics.add.image(config.width/2, config.height - 16, "player");
         this.player.setOrigin(0.5,1);
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
 
-        this.physics.add.collider(this.carro, this.player, function(carro, player) {
-            this.player.resetPlayerPos();
-        });
-        this.physics.add.collider(this.carro2, this.player);
+        this.physics.add.overlap(this.enemies, this.player, function(enemies, player){
+            this.scene.restart();
+        }, null, this);
     }
     
     update(){
         this.moveCarro(this.carro, 3);
         this.moveCarro(this.carro2, 4);
+        this.moveCarro(this.carro3, 5);
+        this.moveCarro(this.carro4, 2);
 
         this.movePlayerManager();
     }
@@ -31,6 +38,7 @@ class LvlOne extends Phaser.Scene{
     //funçao p fazer o obj andar
     moveCarro(carro, vel){
         carro.x += vel;
+        
         if(carro.x > config.width){
             this.resetCarroPos(carro); 
         }
@@ -38,16 +46,9 @@ class LvlOne extends Phaser.Scene{
 
     resetCarroPos(carro){
         carro.x = 0;
-
         //aqui usar um array de posiçoes pre definidas ao inves de random
-
-        let randomY = Phaser.Math.Between(200, 600);
-        carro.y = randomY;
-    }
-
-    resetPlayerPos(){
-        player.setY(config.height - 16);
-        player.setX(config.width/2);
+       // let randomY = Phaser.Math.RND.pick(gameSettings.lanes);
+        carro.y = enemyRndPos();
     }
 
     movePlayerManager(){
@@ -63,10 +64,7 @@ class LvlOne extends Phaser.Scene{
             
         }else if(this.input.keyboard.checkDown(this.cursorKeys.right, 250)){
             this.player.setX((this.player.x)+(gameSettings.playerSpeed));   
-        } //else {
-        //     this.player.setVelocityX(0);
-        //     this.player.setVelocityY(0);
-        // }
+        } 
     }
 }
     
