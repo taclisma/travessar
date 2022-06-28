@@ -10,10 +10,7 @@ class LvlOne extends Phaser.Scene{
         this.carro4 = this.physics.add.image(config.width, config.height, "carro");
        
         this.enemies = this.physics.add.group();
-            this.enemies.add(this.carro);
-            this.enemies.add(this.carro2);
-            this.enemies.add(this.carro3);
-            this.enemies.add(this.carro4);
+            this.enemies.addMultiple(this.carro,this.carro2,this.carro3,this.carro4);
     
         this.player = this.physics.add.image(config.width/2, config.height - 16, "player");
         this.player.setOrigin(0.5,1);
