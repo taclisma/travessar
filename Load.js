@@ -9,9 +9,14 @@ class Load extends Phaser.Scene{
 
     preload(){
         this.load.image("bg","assets/bg.png");
-        this.load.image("carro", "assets/carro.png");
+        this.load.spritesheet("carrito", "assets/carrito_roxo.png", {
+            frameWidth: 32,
+            frameHeight: 32 
+        });
         this.load.image("player", "assets/player.png");
         this.load.image("bt", "assets/botao.png");
+
+
     }
     create(){
         this.scene.start("mainMenu");
