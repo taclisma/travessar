@@ -4,13 +4,24 @@ class LvlOne extends Phaser.Scene{
     }
     
     create(){
-        this.carro = this.physics.add.image(config.width, config.height, "carro");        
+        this.carro = this.add.sprite(config.width, config.height, "carrito");
+        this.anims.create({
+            key: "carrito_roxo_anim",
+            frames: this.anims.generateFrameNumbers("carrito"),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.carro.play("carrito_roxo_anim");
+
         this.carro2 = this.physics.add.image(config.width, config.height, "carro");
         this.carro3 = this.physics.add.image(config.width, config.height, "carro");
         this.carro4 = this.physics.add.image(config.width, config.height, "carro");
        
         this.enemies = this.physics.add.group();
-            this.enemies.addMultiple(this.carro,this.carro2,this.carro3,this.carro4);
+        this.enemies.add(this.carro);
+        this.enemies.add(this.carro2);
+        this.enemies.add(this.carro3);
+        this.enemies.add(this.carro4);
     
         this.player = this.physics.add.image(config.width/2, config.height - 16, "player");
         this.player.setOrigin(0.5,1);
@@ -19,6 +30,7 @@ class LvlOne extends Phaser.Scene{
         this.player.setCollideWorldBounds(true);
 
         this.physics.add.overlap(this.enemies, this.player, function(enemies, player){
+            console.log("alo");
             this.scene.restart();
         }, null, this);
     }
