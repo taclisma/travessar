@@ -19,7 +19,7 @@ var config = {
 	width: 600,
 	height: 600,
 	backgroundColor: 0x000000,
-	scene: [Boot, Load, Menu, LvlOne],
+	scene: [Boot, Load, Menu, LvlOne, End],
 	pixelArt:true,
 	physics: {
 		default: "arcade", 
