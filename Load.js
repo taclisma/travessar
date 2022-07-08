@@ -3,13 +3,13 @@ class Load extends Phaser.Scene{
         super("preLoad");
     }
 
-    create(){
-        this.add.text(20,30, "loading ..", {fill: "yellow"});
-        
-    }
-
+    ///////######## carrega imagens e spritesheets
     preload(){
+        this.load.image("mapa", "assets/mapa.png")
+        this.load.image("telaFim", "assets/fim01.png");
         this.load.image("bg","assets/bg.png");
+
+
         this.load.spritesheet("carrito", "assets/carrito_roxo.png", {
             frameWidth: 32,
             frameHeight: 32 
@@ -22,8 +22,6 @@ class Load extends Phaser.Scene{
             frameWidth: 32,
             frameHeight: 32 
         });
-
-        //-------
         this.load.spritesheet("carrito4", "assets/carrito_roxor.png", {
             frameWidth: 32,
             frameHeight: 32 
@@ -36,15 +34,21 @@ class Load extends Phaser.Scene{
             frameWidth: 32,
             frameHeight: 32 
         });
+
+
         this.load.spritesheet("player", "assets/pato.png", {
             frameWidth: 32,
             frameHeight: 32 
         });
+
+
         this.load.spritesheet("bt", "assets/playbtn.png", {
             frameWidth: 64, frameHeight: 32
         });
         
     }
+
+    //#########inicia cena de menu
     create(){
         this.scene.start("mainMenu");
     }
