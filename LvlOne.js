@@ -5,33 +5,75 @@ class LvlOne extends Phaser.Scene{
 
     
     create(){
+    ///#### background
+        this.mapa = this.add.tileSprite(0,0, config.width, config.height, "mapa");
+        this.mapa.setOrigin(0,0);
+        this.mapa.setTileScale(4, 4);
+
     /////########### inimigos
         this.carro = this.add.sprite(config.width, config.height, "carrito");
+        this.carro2 = this.add.sprite(config.width, config.height, "carrito2");
+        this.carro3 = this.add.sprite(config.width, config.height, "carrito2");
+        this.carro4 = this.add.sprite(config.width, config.height, "carrito3");
+        
+        // ################## animações de sprite
         this.anims.create({
             key: "carrito_roxo_anim",
             frames: this.anims.generateFrameNumbers("carrito"),
             frameRate: 5,
             repeat: -1
         });
-        this.carro.play("carrito_roxo_anim");
-
-        this.carro2 = this.add.sprite(config.width, config.height, "carrito2");
+        
         this.anims.create({
             key: "carrito_vemeio_anim",
             frames: this.anims.generateFrameNumbers("carrito2"),
             frameRate: 5,
             repeat: -1
         });
-        this.carro2.play("carrito_vemeio_anim");
 
-        this.carro3 = this.add.image(config.width, config.height, "carro");
-        this.carro4 = this.add.image(config.width, config.height, "carro");
+        this.anims.create({
+            key: "carrito_verde_anim",
+            frames: this.anims.generateFrameNumbers("carrito3"),
+            frameRate: 5,
+            repeat: -1
+        });
+        
+        this.carro.play("carrito_roxo_anim");
+        this.carro2.play("carrito_vemeio_anim");
+        this.carro3.play("carrito_vemeio_anim");
+        this.carro4.play("carrito_verde_anim");
        
-        this.carro5 = this.add.sprite(0, config.height, "carro");
-        this.carro6 = this.add.sprite(0, config.height, "carro");
-        this.carro7 = this.add.sprite(0, config.height, "carro");
+        this.carro5 = this.add.sprite(0, config.height, "carrito4");
+        this.carro6 = this.add.sprite(0, config.height, "carrito5");
+        this.carro7 = this.add.sprite(0, config.height, "carrito6");
+
+        this.anims.create({
+            key: "carrito_roxo_animR",
+            frames: this.anims.generateFrameNumbers("carrito4"),
+            frameRate: 5,
+            repeat: -1
+        });
+        
+        this.anims.create({
+            key: "carrito_vemeio_animR",
+            frames: this.anims.generateFrameNumbers("carrito5"),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "carrito_verde_animR",
+            frames: this.anims.generateFrameNumbers("carrito6"),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.carro5.play("carrito_roxo_animR");
+        this.carro6.play("carrito_vemeio_animR");
+        this.carro7.play("carrito_verde_animR");
 
         this.enemies = this.physics.add.group();
+        
         this.enemies.add(this.carro);
         this.enemies.add(this.carro2);
         this.enemies.add(this.carro3);
@@ -41,15 +83,15 @@ class LvlOne extends Phaser.Scene{
         this.enemiesR.add(this.carro5);
         this.enemiesR.add(this.carro6);
         this.enemiesR.add(this.carro7);
-    /////########### fim inimigos
-        this.player = this.physics.add.image(config.width/2, config.height - 16, "player");
+            /////########### fim inimigos
+
+        this.player = this.physics.add.image(config.width/2, config.height - 38, "player");
         this.player.setOrigin(0.5,1);
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
 
         this.physics.add.overlap([this.enemies, this.enemiesR], this.player, function(enemies, player){
-            console.log("alo");
             this.player.disableBody(false,true);
             this.time.addEvent({
                 delay: 1000,
@@ -58,6 +100,7 @@ class LvlOne extends Phaser.Scene{
                 loop: false
             });
         }, null, this);
+
         this.vidas = 3;
 
         this.displayVidas  = this.add.text(20,10, `VIDAS 3`, {fill: "yellow"});;
@@ -75,6 +118,7 @@ class LvlOne extends Phaser.Scene{
         this.moveCarroR(this.carro7, 5);
         //this.moveCarroR(this.carro4, 2);
         this.movePlayerManager();
+
     }
 
     //funçao p fazer o obj andar
@@ -113,14 +157,14 @@ class LvlOne extends Phaser.Scene{
         else{
             this.vidas -= 1;
             this.displayVidas.text = "VIDAS " + this.vidas;
-            this.player.enableBody(true, config.width/2, config.height - 16, true, true);
+            this.player.enableBody(true, config.width/2, config.height - 38, true, true);
         }
     }
 
+    //######### movimento do jogador
     movePlayerManager(){
-        if(this.player.y <= gameSettings.areaGanhar){         
-        this.scene.start("end"); /// scena de ganhar
-        }
+
+        this.checkGanhar();
         // movimento com delay de 250ms
         if(this.input.keyboard.checkDown(this.cursorKeys.up, 250)){
             this.player.setY((this.player.y)-(gameSettings.playerSpeed));
@@ -134,6 +178,12 @@ class LvlOne extends Phaser.Scene{
         }else if(this.input.keyboard.checkDown(this.cursorKeys.right, 250)){
             this.player.setX((this.player.x)+(gameSettings.playerSpeed));   
         } 
+    }
+
+    checkGanhar(){
+        if(this.player.y <= gameSettings.areaGanhar){
+            this.scene.start("End"); /// cena de ganhar
+        }
     }
 
 }
