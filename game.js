@@ -1,12 +1,12 @@
+///########variaveis 
 var gameSettings = {
 	vidas: 3,
 	areaGanhar: 100,
-	playerSpeed: 48,
-	lanes: [100, 200, 300, 400, 500],
-	lanes2: [150, 250, 350, 450]
+	playerSpeed: 38,
+	lanes: [154, (154+40*2), (154+38*4),(154+38*6) ],//, 200, 300, 400, 500],
+	lanes2: [(154+40), (154+38*3), (154+38*5)]//[150, 250, 350, 450]
 }
 
-// isso pode ir p/ scene load
 function enemyRndPos(){
 	let randomY = Phaser.Math.RND.pick(gameSettings.lanes);
 	return randomY;
@@ -16,8 +16,8 @@ function enemyRndPosR(){
 	return randomY;
 }
 var config = {
-	width: 600,
-	height: 600,
+	width: 512,
+	height: 512,
 	backgroundColor: 0x000000,
 	scene: [Boot, Load, Menu, LvlOne, End],
 	pixelArt:true,
