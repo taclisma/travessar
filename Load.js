@@ -5,11 +5,13 @@ class Load extends Phaser.Scene{
 
     ///////######## carrega imagens e spritesheets
     preload(){
+        /////####### imagens de inicio e fim
         this.load.image("mapa", "assets/mapa.png")
+        this.load.image("bgfim", "assets/fim_bg.png");
         this.load.image("telaFim", "assets/fim01.png");
         this.load.image("bg","assets/bg.png");
 
-
+        /////#######spritesheets
         this.load.spritesheet("carrito", "assets/carrito_roxo.png", {
             frameWidth: 32,
             frameHeight: 32 

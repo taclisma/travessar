@@ -83,13 +83,27 @@ class LvlOne extends Phaser.Scene{
         this.enemiesR.add(this.carro5);
         this.enemiesR.add(this.carro6);
         this.enemiesR.add(this.carro7);
-            /////########### fim inimigos
+        /////########### fim inimigos
 
-        this.player = this.physics.add.image(config.width/2, config.height - 38, "player");
+        //////####### jogador
+        this.player = this.physics.add.sprite(config.width/2, config.height - 38, "player");
         this.player.setOrigin(0.5,1);
-
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.player.setCollideWorldBounds(true);
+            ////####### animaçao jogador
+            this.anims.create({
+                key:"pato_para",
+                frames: this.anims.generateFrameNumbers("player", { start: 0, end: 1 }),
+                frameRate: 2,
+                repeat: -1
+            });
+            this.anims.create({
+                key:"pato_morte",
+                frames: this.anims.generateFrameNumbers("player", { start: 4, end: 6 }),
+                frameRate: 2,
+                repeat: -1
+            });
+        this.player.play("pato_para");
 
         this.physics.add.overlap([this.enemies, this.enemiesR], this.player, function(enemies, player){
             this.player.disableBody(false,true);
@@ -163,7 +177,6 @@ class LvlOne extends Phaser.Scene{
 
     //######### movimento do jogador
     movePlayerManager(){
-
         this.checkGanhar();
         // movimento com delay de 250ms
         if(this.input.keyboard.checkDown(this.cursorKeys.up, 250)){
